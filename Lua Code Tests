@@ -1,0 +1,90 @@
+--1
+--Ask the user for some text, convert the text into ALL CAPS
+
+print("Please Enter som words.")
+someWords = io.read()
+print(string.upper(someWords))
+
+--2
+-- Ask the user for 2 numbers, add them together and print the result
+-- Think about what happens when the user enters a letter.
+print("Please enter the first number:")
+num1 = tonumber(io.read())
+while num1 == nil do
+    print("That's not a valid number. Please enter the first number:")
+    num1 = tonumber(io.read())
+end
+
+print("Please enter the second number:")
+num2 = tonumber(io.read())
+while num2 == nil do
+    print("That's not a valid number. Please enter the second number:")
+    num2 = tonumber(io.read())
+end
+
+total = num1 + num2
+print("The total is: " .. total)
+
+--3
+--Get an unknown amount of numbers from the user, add them together and print the result.
+-- The user should type "done" when they are finished entering numbers.
+continueVar = "y"
+total = 0
+newNumber = 0
+
+while continueVar == "y" do
+    print("Please enter a number (or type 'done' to finish):")
+    newNumber = io.read()
+
+    while newNumber == nil do
+        print("That's not a valid number. Please enter a number (or type 'done' to finish):")
+        newNumber = io.read()
+    end
+
+    total = total + tonumber(newNumber)
+    print("Do you want to enter another number? (y/n)")
+    continueVar = io.read()
+end
+print("The total is: " .. total)
+
+--4
+--Have the user define a maximum number, then generate a random number between 0 and their number
+-- Ask the user if they want to play again or quit.
+
+continueVar = "y"
+math.randomseed(os.time())
+math.random(); math.random(); math.random() -- discard first few random numbers
+
+while continueVar == "y" do
+    print("Please enter a maximum number:")
+    maxValue = tonumber(io.read())
+    while maxValue == nil or maxValue <= 0 do
+        print("That's not a valid number. Please enter a positive maximum number:")
+        maxValue = tonumber(io.read())
+    end
+    randomValue = math.random(0, maxValue)
+    print("The random number is: " .. randomValue)
+    print("Do you want to play again? (y/n)")
+    continueVar = io.read()
+end
+
+--5
+--Get s random number, if the number is even, print "even", if the number is odd, print "odd". 
+--Print out how many times it was odd and how many times it was even.
+-- We gotta use modulus 
+
+evencounter = 0
+oddcounter = 0
+
+for x = 1, 10 do
+    randomNumber = math.random(0, 100)
+    if randomNumber % 2 == 0 then
+        print(randomNumber)
+        print("EVEN")
+    else
+        print("ODD")
+        oddcounter = oddcounter + 1
+    end
+end
+
+print("There were " .. evencounter .. " even numbers and " .. oddcounter .. " odd numbers.")
