@@ -1,0 +1,58 @@
+Print ("Hello")
+
+myvariable = 5
+
+def myfunction (x, y):
+  return (x + y)
+
+print (myfunction(myvariable, 10))
+
+mylist = [1, 2, 3, 4, 78, 92, "bob"]
+
+print(mylist [0])
+
+for x in mylist:
+  print(x)
+
+mydictionary = ("name" : "george", "age": 42)
+
+#this is a comment
+#print out the values of the dictionary
+for x in mydictionary:
+  print(mydcitionary[x])
+
+for x in range (5):
+
+
+
+#task 1
+#convert text to uppercase, print the result.
+
+#.upper()
+
+#Task #2
+#Ask the user for 2 numbers, add them together, print the result.
+#Make sure the user only inputs the number
+
+num1 = int(input("Enter a number:"))
+#while not isdigit
+num2 = int(input("Enter another number"))
+#while not num2 isdigit
+
+total = num1 + num2
+print(total)
+
+#Task 3
+#Get an unknown amount of numbers from the user, add them together, print the result.
+#loop asking the user for numbers until they say they are done.
+
+import random
+
+print(random.random())
+print(random.randint(0, 100))
+
+#task 5
+#generate 10 random numbers, if they are even, print "right" and if they are odd print "left."
+#print how many lefts and rights we got.
+
+num2 = 
