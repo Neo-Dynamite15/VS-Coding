@@ -22,8 +22,15 @@ for x in mydictionary:
   print(mydcitionary[x])
 
 for x in range (5):
+  print('Hello)
 
+age = input("What is your age ?")
 
+while not age.isdigit():
+  print("That is not a number :")
+  age = input("What is your age?")
+
+print(age)
 
 #task 1
 #convert text to uppercase, print the result.
