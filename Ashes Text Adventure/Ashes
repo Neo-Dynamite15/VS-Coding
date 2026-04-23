@@ -14,17 +14,11 @@ print("You're in a dungeon, what do you do?")
 # Player/Agni's inventory for items they can find.
 inventory = []
 
-# Player/Agni's health stats.
-player = {
-    "health": 100,
-    "alive": True
-}
-
 # Function to show Agni's status and inventory.
 def check_status():
-    print("\n--- STATUS ---")
+    print("\nCharacter Status")
     print(f"Name: Agni")
-    print(f"Health: {player['health']}")
+    print(f"Species: Waxborne")
     print(f"Inventory: {inventory}")
 
 # Game introduction
@@ -367,5 +361,7 @@ def end_game2():
     print("You got the good ending!")
     exit()
 
+# Function to start the game.
+start_game()
 # Function to start the game.
 start_game()
