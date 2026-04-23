@@ -1,0 +1,371 @@
+# Ashes
+# A game set in a world of darkness
+# Made by Gael Contreras
+
+print("-------------------------------------------------------------------")
+print("-------------------------------Ashes-------------------------------")
+print("-------------------------By Gael Contreras-------------------------")
+print("-------------------------------------------------------------------\n")
+print("Darkness...It's all you ever see, a world painted in eternal darkness. A world where light is crucial to your survival.")
+print("Your name is Agni, and you're a waxborne, a candle-based creature.")
+print("Your mission is to light the world torch to bring light back to your kingdom.")
+print("You're in a dungeon, what do you do?")
+
+# Player/Agni's inventory for items they can find.
+inventory = []
+
+# Player/Agni's health stats.
+player = {
+    "health": 100,
+    "alive": True
+}
+
+# Function to show Agni's status and inventory.
+def check_status():
+    print("\n--- STATUS ---")
+    print(f"Name: Agni")
+    print(f"Health: {player['health']}")
+    print(f"Inventory: {inventory}")
+
+# Game introduction
+def start_game():
+    # First player decision
+    print("\n-----------------------------------------------------------------")
+    print("Where do you look? : 'left', 'dungeon bars', 'right', 'status'")
+    choice = input("> ").lower()
+
+    if choice == "left":
+        if "stick" in inventory:
+            print("No need to look there.")
+            start_game()
+        else:    
+            look_left()
+    elif choice == "dungeon bars":
+        look_at_bars()
+    elif choice == "right":
+        look_right()
+    elif choice == "light":
+        print("Yes, thats what you are..")
+        start_game()
+    elif choice == "agni":
+        print("That's your name.")
+        start_game()
+    elif choice == "status":
+        check_status()
+        start_game()
+    else:
+        print("- Invalid input. Try again.")
+        start_game()
+
+# Function when looking left is chosen
+def look_left():
+    print("\n-----------------------------------------------------------------")
+    print("You see a wall of concrete, over to the left you see an extinguished torch.")
+    print("What do you do?: 'take the stick', 'look away'")
+
+    choice = input("> ").lower() 
+
+    if choice == "take the stick":
+        inventory.append("stick")
+        print("- You picked up a stick. It doesn't look like it can be rextinguished however...")
+        start_game()
+    elif choice == "look away":
+        start_game()
+    else:
+        print("- Invalid input. Try again.")
+        look_left()
+
+# Function if chosen to look at the bars
+def look_at_bars():
+    print("\n-----------------------------------------------------------------")
+    print("You look at the dungeon bars, they seem too thick to walk through.")
+    print("What do you do? 'look at the lock', 'leave'")
+
+    choice = input("> ").lower() 
+    if choice == "look at the lock":
+        print("\n-----------------------------------------------------------------")
+        print("- You look at the lock, it seems brittle.")
+        if "stick" in inventory:
+            print("  You used the stick to break the lock. It works! You're free from the dungeon and now your journey truly begins.")
+            dungeon_exit()
+        else:
+            print("  You used your hands to fiddle with the lock but unfortunately you're not that strong enough...")
+            start_game()
+    elif choice == "Leave":
+        start_game()
+    else:
+        print("- Invalid input. Try again.")
+        look_at_bars()
+
+#Function to look right
+def look_right():
+    print("\n-----------------------------------------------------------------")
+    print("You look to the right to see a concrete wall...")
+    print("What do you do?: 'keep staring', 'lick', 'leave'")
+
+    choice = input("> ").lower()
+    if choice == "keep staring":
+        print ("- You stare at the wall, the wall seems to be a wall.")
+        look_right()
+    elif choice == "lick":
+        print ("- You lick the wall... gross... Why did you do that??")
+        look_right()
+    elif choice == "leave":
+        start_game()
+    else:
+        print("- Invalid input. Try again.")
+        look_right()
+
+# Function when entering to the castle grounds
+def dungeon_exit():
+    print("\n-----------------------------------------------------------------")
+    print("You exit the dungeon, in front of you is a long corridor leading to the exit.")
+    print("As you make your way through you see other dungeon cells from you left to your right.")
+    print("Each cell is empty with some containing corpses of waxbornes, their lights extinguished leaving only their wax bodies to freeze and their metallic armor left to rust...")
+    print("You shook your head trying desperately to avoid looking further and leave as fast as possible.\n")
+    print("You find your way to the castle grounds, a once prosperous area not broken and empty. In the Middle there is a fountain, and around it are doorways.")
+    castle_grounds()
+
+def castle_grounds():
+    print("\n-----------------------------------------------------------------")
+    print("Where do you go?: 'left', 'fountain', 'forward', 'right', 'status'")
+    choice = input("> ").lower()
+    if choice == "left":
+        castle_gate()
+    elif choice == "fountain":
+        print("- You head to the middle and see the fountain, a once shining piece is now a shell broken and filled with stillwater...")
+        castle_grounds()
+    elif choice == "forward":
+        castle_quarters()
+    elif choice == "right":
+        throne_entrance()
+    elif choice == "status":
+        check_status()
+        castle_grounds()
+    else:
+        print("- Invalid input. Try again.")
+        castle_grounds()
+
+# function for choosing castle gate
+def castle_gate():
+    print("\n-----------------------------------------------------------------")
+    print("You find yourself at the castle gate, it's open...")
+    print("go back or leave...")
+    
+    choice = input("> ").lower()
+    if choice == "go back":
+        castle_grounds()
+    elif choice == "leave":
+        bad_ending()
+    else:
+        print("- Invalid input. Try again.")
+        castle_gate()
+
+
+# function for choosing the throne entrance.
+def throne_entrance():
+    print("\n-----------------------------------------------------------------")
+    print("You find yourself at the entrance to the throne room, it;s locked by a grated door with a keyhole in the middle.")
+    print("What do you do?: 'look through', 'look at the lock', 'leave'")
+
+    choice = input("> ").lower()
+    if choice == "look through":
+        print("- You look through the grated door and see a small flicker of light, it's the world torch!")
+        print("  So close yet so far...")
+        throne_entrance()
+    elif choice == "look at the lock":
+        print("- The lock seems sturdy unlike the previous lock...")
+        if "key" in inventory:
+            print("  You unlock the gate and push it open...")
+            inventory.remove("key")
+            throne_room_walk()
+        else:
+            print("  It doesn't seem like you have anything to open the lock, you could try your stick...")
+            print("  Best not to risk it...")
+            throne_entrance()
+    elif choice == "leave":
+        castle_grounds()
+    else:
+        print("- Invalid input. Try again.")
+        throne_entrance()
+
+# function for choosing forward
+def castle_quarters():
+    print("\n-----------------------------------------------------------------")
+    print("You find yourself at the castle quarters.")
+    print("Where do you go?: 'left', 'forward', 'right', 'status', or 'leave")
+
+    choice = input("> ").lower()
+    if choice == "left":
+        print("- The pathway is blocked by rubble...")
+        castle_quarters()
+    elif choice == "forward":
+        if "key" in inventory:
+            print("No need to look there.")
+            castle_quarters()
+        else:
+            trap()
+    elif choice == "right":
+        if "enemy" in inventory:
+            print("- There's no need to head there anymore...")
+            castle_quarters()
+        elif "key" in inventory:
+            print("- There's no need to head there anymore...")
+            castle_quarters()
+        else:
+            monster_encounter()
+    elif choice == "status":
+        check_status()
+        castle_quarters()
+    elif choice == "leave":
+        castle_grounds()
+    else:
+        print("- Invalid input. Try again.")
+        castle_quarters()
+
+# function for trap
+def trap():
+    print("\n-----------------------------------------------------------------")
+    print("You see a pedestal holding up a key with the floor having weird lines...")
+    print("walk forward or go back?")
+
+    choice = input("> ").lower()
+    if choice == "walk forward":
+        if "enemy" in inventory:
+            print("- You toss the carcass of the night hound into the floor and set off the trap.")
+            print("  Now you can walk through!")
+            inventory.remove("enemy")
+            inventory.append("key")
+            print("  You got the key!")
+            castle_quarters()
+        else:
+            print("- You walk forward when suddenly the floor opens and you fall into a pit of spikes")
+            game_over()
+    elif choice == "go back":
+        castle_quarters()
+    else:
+        print("- Invalid input. Try again.")
+        castle_quarters()
+
+# function for monster encounter
+def monster_encounter():
+    print("\n-----------------------------------------------------------------")
+    print("You enter the room and find a nighthound!")
+    print("The creature faces you and it starts to growl.\n")
+    print("It's ready to strike what do you do!?")
+    print("run, attack, or charge")
+
+    choice = input("> ").lower()
+    if choice == "Run":
+        print("\n-----------------------------------------------------------------")
+        print("- You tried to run away but the nighthound immediately pounces on you and drags you back into the room.")
+        print("  The nighthound crushes your mettalic body in half breaking through the wax with.")
+        print("  The nighthound feasts on your carcass as your light is extinguished.")
+        game_over()
+    elif choice == "attack":
+        print("- You pull out the stick you've been holding and whack the nighthound.")
+        print("  You hit the nighthound in the head hard using the mettalic tip of the stick killing the nighthound but breaking the stick in the process...")
+        inventory.remove("stick")
+        print("   You got the nighthound's corpse!")
+        inventory.append("enemy")
+        castle_quarters()
+    elif choice == "charge":
+        print("\n-----------------------------------------------------------------")
+        print("- You attempt the charge towards the nighthound, you try to grab it by its neck but its claws easily damage you enough to let go.")
+        print("  The nighthound knocks you down and devours your wax flesh, extinguishing your light immediately...")
+        game_over()
+    else:
+        print("- Invalid input. Try again.")
+        monster_encounter()
+
+# function for entering the throne room
+def throne_room_walk():
+    print("\n-----------------------------------------------------------------")
+    print("You enter the throne room, you walk through the empty halls and find the corpse of the candle king resting in his throne...")
+    print("Behind him is the world torch...")
+    throne_room()
+
+def throne_room():
+    print("\n-----------------------------------------------------------------")
+    print("What do you do?: walk forward, look up.")
+
+    choice = input("> ").lower()
+    if choice == "walk forward":
+        stairs()
+    elif choice == "look up":
+        print("- You look up and see the world torch barely lit...")
+        throne_room()
+    else:
+        print("- Invalid input. Try again.") 
+        throne_room()
+
+# function for the finale
+def stairs():
+    print("\n-----------------------------------------------------------------")
+    print("You walk toward the stairs on the left side of the room to walk up to the world torch.")
+    print("You look to the wall on the left and read closely.")
+    print("If the world has succumbed to darkness again, one must give up their light to restore all.")
+    finale()
+
+def finale():    
+    print("\n-----------------------------------------------------------------")
+    print("Make your choice...")
+    print("light the torch or leave")
+
+    choice = input("> ").lower()
+    if choice == "light the torch":
+        good_ending()
+    elif choice == "leave":
+        bad_ending()
+    else:
+        print("Invalid input. Try again.") 
+        finale()
+
+
+#function for game over
+def game_over():
+    print("\n-----------------------------------------------------------------")
+    print("Your light has been extinguished...")
+    print("Continue?: yes or no")
+    choice = input("> ").lower()
+    if choice == "yes":
+        inventory.clear()
+        start_game()
+    elif choice == "no":
+        exit()
+    else:
+        print("Invalid input. Try again.") 
+        game_over()
+
+# function for the true ending
+def good_ending():
+    print("\n-----------------------------------------------------------------")
+    print("You open the metallic hatch in your body to hold out your light and quickly toss it into the world torchh.")
+    print("With a large flicker the fire expands further bringing back light to the kingdom.")
+    print("You slowly sit down by torch watching as the residents slowly come back to life.")
+    end_game2()
+
+# function for the bad ending
+def bad_ending():
+    print("\n-----------------------------------------------------------------")
+    print("You leave the kingdom, you decided to preserve your light for your own survival first instead of the kingdom...")
+    print(" You wander through the oasis as you left the kingdom to rot in darkness...")
+    end_game1()
+
+# function for ending 1
+def end_game1():
+    print("\n-----------------------------------------------------------------")
+    print("You got the bad ending.")
+    exit()
+
+# function for ending 2
+def end_game2():
+    print("\n-----------------------------------------------------------------")
+    print("Your light has been extinguished...")
+    print("However... when the residents find your body and see the name Agni on your back...")
+    print("They marked you a hero.")
+    print("You got the good ending!")
+    exit()
+
+# Function to start the game.
+start_game()
