@@ -159,7 +159,7 @@ def castle_gate():
 # function for choosing the throne entrance.
 def throne_entrance():
     print("\n-----------------------------------------------------------------")
-    print("You find yourself at the entrance to the throne room, it;s locked by a grated door with a keyhole in the middle.")
+    print("You find yourself at the entrance to the throne room, it's locked by a grated door with a keyhole in the middle.")
     print("What do you do?: 'look through', 'look at the lock', 'leave'")
 
     choice = input("> ").lower()
