@@ -85,8 +85,126 @@ label cell:
     hide screen inventory_display_toggle
 
 label hallway: # ending
+    scene hallway
     "You step into the hallway, the air growing colder and the darkness seeming to close in around you."
     "The corridor stretches out before you, with doors on either side and a faint light at the end."
-    "Your journey has just begun..."
+    scene castlegrounds
+
+    "You find your way to the castle grounds, a once prosperous area not broken and empty."
+
+    jump castlegrounds
+
+label castlegrounds:
+    show screen inventory_display_toggle # Show the inventory display toggle screen, which will be used to show the inventory item description screen when the player clicks on the "Inventory" button.
+    
+    scene castlegrounds
+    menu castlegroundchoices:
+        a "Now what...?"
+        "Left": # First choice
+            jump entrance
+        "Fountain": # Second choice
+            scene fountain 
+            "You head to the middle and see the fountain, a once shining piece is now a shell broken and filled with stillwater..."
+            scene castlegrounds
+            jump castlegroundchoices
+        "Forward": # Third choice
+            if "Gold Key" in inventory: # If the player has already picked up the gold key, they will see the empty library image and a message saying they've already picked up the gold key. Otherwise, they will see the library image and have the option to look at the gold key or leave.
+                "No need to go there again..."
+                scene castlegrounds
+                jump castlegroundchoices
+            else: # If the player hasn't picked up the gold key, they will see the quarters
+                jump castlequarters
+        "Right": # Fourth choice
+            scene castlegateempty
+            "You head to the right and see the entrance to the throne room."
+            menu castlegatechoices:
+                "Peek through the doors.":
+                    scene castlegateempty
+                    "You peek through the doors and see a grand throne room, with a throne at the far end and a large chandelier hanging from the ceiling."
+                    "The room is empty, and for some reason..."
+                    "The world torch is... gone...?"
+                    a "Wait... Where's the world torch...?"
+                    a "I thought it was supposed to be here...?"
+                    a "I thought..."
+                    a "..."
+                    jump castlegrounds
+                "Leave it alone.":
+                    scene castlegrounds
+                    jump castlegrounds
+
+    hide screen inventory_display_toggle 
+
+label castlequarters:
+    show screen inventory_display_toggle # Show the inventory display toggle screen, which will be used to show the inventory item description screen when the player clicks on the "Inventory" button.
+
+    scene quarters
+    "You head forward and see the castle quarters, a once lively area now broken and empty."
+    menu castlequarterschoices:
+        a "Now what...?"
+        "Right": # First choice
+            if "Corpse" in inventory:
+                "No need to go there again..."
+                scene quarters
+                jump castlequarterschoices
+            else:
+                scene blackscreen with fade
+                "As you head to the right, you enter a room."
+                "You find the corpse of a nighthound..."
+                "What killed it...?"
+                "You shake your head and decide to take the corpse with you, just in case it could be useful..."
+                $ inventory.append("Corpse")
+                scene quarters with fade
+                jump castlequarterschoices
+        "Forward": # Second choice
+            if "Corpse" in inventory:
+                scene blackscreen with fade
+                "You see a pedestal holding up a key with the floor having weird lines..."
+                "You toss the carcass of the night hound into the floor and set off the trap"
+                "The corpse is stabbed by the spikes making it a platform to reach the key."
+                $ inventory.append("Gold Key")
+                scene castlegrounds
+                jump castlegrounds
+            else:
+                scene quarters
+                "You see a pedestal holding up a key with the floor having weird lines..."
+                scene blackscreen with fade
+                "You step on the floor and set off the trap"
+                scene death
+                "Spikes shoot out of the floor, impaling you and killing you instantly."
+                "You died."
+                return
+
+
+
+    hide screen inventory_display_toggle
+
+
+label entrance:
+    show screen inventory_display_toggle # Show the inventory display toggle screen, which will be used to show the inventory item description screen when the player clicks on the "Inventory" button.
+
+    scene castlegate
+    "You find yourself at the castle gate, it's locked."
+    a "..."
+
+    menu entrancechoices:
+        "Try to open the gate.": # First choice
+            if "Gold Key" in inventory: # If the player has the gold key, they will be able to use it to open the gate and escape. Otherwise, they will just try to open the gate and find that it's locked.
+                "You take out the gold key and try it on the gate."
+                scene castlegateempty
+                "The key fits perfectly, and with a satisfying click, the gate swings open."
+                scene blackscreen with fade
+                "You step through the gate, leaving the castle grounds behind you."
+                "As you walk away, you can't help but feel a sense of relief and freedom."
+                "However... your journey has just begun..."
+                return
+            else: 
+                "You try to open the gate, but it's locked tight."
+                a "It's locked... I need to find a key or something to open it..."
+                jump entrancechoices
+        "Leave it alone.":
+            scene castlegrounds
+            jump castlegroundchoices
+
+    hide screen inventory_display_toggle
 
     return
